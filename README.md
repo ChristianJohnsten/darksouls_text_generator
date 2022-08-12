@@ -33,7 +33,7 @@
 <a href="https://github.com/chrisddr77/darksouls_text_generator"></a>
 <h1 align="center">Dark Souls Text Generator</h1>
   <p align="center">
-    An app that generates Dark Souls text
+    Python app to generate Dark Souls style text.
     <br />
     <br />
     <a href="https://github.com/chrisddr77/darksouls_text_generator/issues">Report Bug</a>
@@ -187,6 +187,7 @@ Project Link: [https://github.com/chrisddr77/darksouls_text_generator](https://g
 ## Acknowledgments
 
 * Inspired by the [@nounverbed](https://twitter.com/nounverbed) Twitter bot created by [@mrfb](https://twitter.com/mrfb)
+* Backgrounds were screen-grabbed from a [Dark Souls 3 Walkthrough on YouTube](https://www.youtube.com/playlist?list=PLgPhYhf1rAvGyvo8JRKL53iBqJQbbqMJA) created by [Tselel Leb](https://www.youtube.com/channel/UCsUo1BrpZphLg8dfoYHNlGA)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
