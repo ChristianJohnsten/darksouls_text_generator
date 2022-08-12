@@ -40,30 +40,36 @@ class DarkSoulsGen:
     def _key_handler(self, event):
         # print(event.char, event.keysym, event.keycode)
 
-        if event.keysym == "space":  # reroll all
+        if event.keysym == "space":  # re-gen all
             self.get_image()
             self.label.configure(image=self.tkimg)
             self.label.image = self.tkimg
 
-        elif event.keysym in ("1"):  # reroll adjective
+        elif event.keysym == "1":  # re-gen adjective
             t = self.im_gen.text.split(" ")
-            self.get_image(text=self.wg.get_adjective()+" "+t[1]+" "+t[2])
+            self.get_image(text=self.wg.get_adjective()+" "+t[1]+" "+t[2], bg=-1)
             self.label.configure(image=self.tkimg)
             self.label.image = self.tkimg
 
-        elif event.keysym in ("2"):  # noun
+        elif event.keysym == "2":  # re-gen noun
             t = self.im_gen.text.split(" ")
-            self.get_image(text=t[0]+" "+self.wg.get_noun()+" "+t[2])
+            self.get_image(text=t[0]+" "+self.wg.get_noun()+" "+t[2], bg=-1)
             self.label.configure(image=self.tkimg)
             self.label.image = self.tkimg
 
-        elif event.keysym in ("3"):  # verb
+        elif event.keysym == "3":  # re-gen verb
             t = self.im_gen.text.split(" ")
-            self.get_image(text=t[0]+" "+t[1]+" "+self.wg.get_verb())
+            self.get_image(text=t[0]+" "+t[1]+" "+self.wg.get_verb(), bg=-1)
             self.label.configure(image=self.tkimg)
             self.label.image = self.tkimg
 
-        elif event.keysym == "s":  # save
+        elif event.keysym in "b":  # re-gen background
+            t = self.im_gen.text
+            self.get_image(text=t)
+            self.label.configure(image=self.tkimg)
+            self.label.image = self.tkimg
+
+        elif event.keysym == "s":  # save image
             try:
                 self.save_label.destroy()
             except AttributeError:
@@ -82,7 +88,7 @@ class DarkSoulsGen:
             size = self.size
         if bg is None:
             bg = self.get_random_background()
-        elif self.bg == -1:  # Use last selected image
+        elif bg == -1:  # Use last selected image
             bg = self.bg
         if text is None:
             text = self.wg.gen_anv()
