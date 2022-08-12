@@ -186,7 +186,7 @@ Project Link: [https://github.com/chrisddr77/darksouls_text_generator](https://g
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* Inspired by the [@nounverbed](https://twitter.com/nounverbed) Twitter bot created by [](https://twitter.com/mrfb)
+* Inspired by the [@nounverbed](https://twitter.com/nounverbed) Twitter bot created by [@mrfb](https://twitter.com/mrfb)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
