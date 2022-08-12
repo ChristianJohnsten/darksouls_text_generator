@@ -107,7 +107,7 @@ You will only need a few things to get set up.
     ```sh
    git clone https://github.com/chrisddr77/darksouls_text_generator.git
    ```
-2. Copy the `Trojan Pro Regular.ttf` font into the same directory as `main.py`
+2. Copy the `Trajan Pro Regular.ttf` font into the same directory as `main.py`
 3. Run `python main.py`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
