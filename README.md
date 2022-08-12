@@ -83,7 +83,7 @@
 
 
 <!-- GETTING STARTED -->
-### Getting Started
+## Getting Started
 
 You will only need a few things to get set up.
 
