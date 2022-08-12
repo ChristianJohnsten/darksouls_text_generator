@@ -5,18 +5,36 @@ class ImgGen:
     def __init__(self):
         self.img = None
         self.draw_obj = None
-        self.font = ImageFont.truetype(r'Trajan Pro Regular.ttf', 120)
+        self.font = ImageFont.truetype(r'Trajan Pro Regular.ttf', 64)
         self.text = ""
 
     def gen(self, size, background, text):
-        self.img = Image.open(background)
-        self.draw_obj = ImageDraw.Draw(self.img, 'RGBA')
         self.text = text
-
-        self._draw_banner()
-        self._draw_text(self.text)
-
+        self.img = Image.open(background)
         self.img = self.img.resize(size, Image.Resampling.LANCZOS)
+        img_w, img_h = self.img.size
+
+        self.draw_obj = ImageDraw.Draw(self.img, 'RGBA')
+        self._draw_banner()
+
+        font_width = self.font.getsize(self.text)[0]
+
+        # When the text is resized to the image width, this will make sure that it occupies 70% of the image width
+        scaled_width = int(font_width * 1.3)
+
+        if font_width > size[0] * 0.7:  # Only scale text if goes beyond 70% the width of the image
+            self.txt_img = Image.new('RGBA', (scaled_width , size[1]), (0, 0, 0, 0))
+        else:
+            self.txt_img = Image.new('RGBA', size, (0, 0, 0, 0))
+
+        self.txt_draw_obj = ImageDraw.Draw(self.txt_img, 'RGBA')
+
+        self._draw_text(text)
+        self.txt_img = self.txt_img.resize(size, Image.Resampling.LANCZOS)
+        txt_w, txt_h = self.txt_img.size
+
+        font_y_offset = int(0.08*self.font.size)  # Calculates the amount of y offset to center the text
+        self.img.paste(self.txt_img, (0, font_y_offset), self.txt_img)
 
         return self.img
 
@@ -79,6 +97,6 @@ class ImgGen:
 
 
     def _draw_text(self, text):
-        self.draw_obj.text((self.img.width // 2, self.img.height // 2), text, fill="#860507", font=self.font, anchor="mm")
+        self.txt_draw_obj.text((self.txt_img.width // 2, self.txt_img.height // 2), text, fill="#860507", font=self.font, anchor="mm")
 
 
