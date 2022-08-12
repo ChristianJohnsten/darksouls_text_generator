@@ -5,7 +5,7 @@ class ImgGen:
     def __init__(self):
         self.img = None
         self.draw_obj = None
-        self.font = ImageFont.truetype(r'OptimusPrinceps.ttf', 120)
+        self.font = ImageFont.truetype(r'Trajan Pro Regular.ttf', 120)
         self.text = ""
 
     def gen(self, size, background, text):
