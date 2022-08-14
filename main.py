@@ -27,22 +27,6 @@ class DarkSoulsGen:
         self.bg = self.get_random_background()
         self.get_image()
 
-        # ----- Keybindings bar -----
-        keybinds = ["[Space] Re-generate all",
-                    "[S] Save image",
-                    "[R] Reset input text",
-                    "[B] New background",
-                    "[1] New 1st word",
-                    "[2] New 2nd word",
-                    "[3] New 3rd word"
-                    ]
-
-        keybinds = ("      ").join(keybinds)  # Joins all keybindings with 6 spaces to separate them
-        keybinds = "  " + keybinds  # Add 2 spaces of padding to the front of the keybindings string
-
-        self.keybinds_bar = Label(self.root, text=keybinds, bg="#000000", fg="#FFFFFF", anchor="w")
-        self.keybinds_bar.grid(row=2, column=0, sticky="nsew")
-
         # ----- Text entry bar -----
         self.text_entry_frame = Frame(self.root, bg="#FFFFFF", borderwidth=0)
         self.text_entry_frame.columnconfigure(1, weight=1)
@@ -59,13 +43,51 @@ class DarkSoulsGen:
         self.bg_img_label = Label(self.root, image=self.tkimg, borderwidth=0)
         self.bg_img_label.grid(row=1, column=0, padx=0, pady=0)
 
+        # ----- Keybindings bar -----
+        self.keybinds_list = ["[Space] Re-generate all",
+                              "[S] Save image",
+                              "[R] Reset input text",
+                              "[B] New background",
+                              "[1] New 1st word",
+                              "[2] New 2nd word",
+                              "[3] New 3rd word"
+                              ]
+
+        self.keybinds = ""
+        self.keybinds_bar = None
+        self._build_keybinds_bar()
+
         # ----- Bindings -----
         self.root.bind("<Key>", self._key_handler)  # Send all key events to _key_handler
         self.bg_img_label.bind("<Button-1>", self._set_img_focus)  # Grab focus when image is left clicked on
 
         self.root.mainloop()
 
+    def _build_keybinds_bar(self):
+        text = self.text_entry.get().lower()
+        form = "{adjective} {noun} {past tense verb}"
+        changed = False
+
+        if text == form and "[1]" not in self.keybinds:  # Build full keybindings list
+            self.keybinds = ("      ").join(self.keybinds_list)  # Joins all keybindings with 6 spaces to separate them
+            changed = True
+
+        elif not text == form and "[1]" in self.keybinds:
+            self.keybinds = ("      ").join(self.keybinds_list[:-3])  # Don't include 1st, 2nd, and 3rd word keys
+            changed = True
+
+        if changed:
+            self.keybinds = "  " + self.keybinds  # Add 2 spaces of padding to the front of the keybindings string
+            if not self.keybinds_bar:
+                self.keybinds_bar = Label(self.root, text=self.keybinds, bg="#000000", fg="#FFFFFF", anchor="w")
+                self.keybinds_bar.grid(row=2, column=0, sticky="nsew")
+            else:
+                self.keybinds_bar.configure(text=self.keybinds)
+                self.keybinds_bar.update()
+
     def _key_handler(self, event):
+        self._build_keybinds_bar()
+
         if str(self.root.focus_get()) == ".!frame.!entry":  # If focus is on the text_entry, don't process keybinds
             if event.char in ("\r", "\n"):  # Change focus to the image and generate image when the enter key is pressed
                 self._set_img_focus()
@@ -82,8 +104,26 @@ class DarkSoulsGen:
             elif event.char == "r":  # Reset text_entry (input text)
                 self.text_entry.delete(0, END)
                 self.text_entry.insert(0, self.default_text)
+                self._build_keybinds_bar()
 
-            elif self.text_entry.get().lower() == "{adjective} {noun} {past tense verb}":
+            elif event.char == "b":  # New background
+                t = self.im_gen.text
+                self.get_image(text=t)
+                self.bg_img_label.configure(image=self.tkimg)
+                self.bg_img_label.image = self.tkimg
+
+            elif event.char == "s":  # Save image
+                try:
+                    self.save_label.destroy()  # If a save_label already exists, try to destroy it
+                except AttributeError:
+                    pass
+
+                self.save_label = Label(self.root, text="  Saved  ", bg="#000000", fg="#FFFFFF", font=(None, 16))
+                self.save_label.place(relx=0.5, rely=0.15, anchor='center')
+                self.root.after(2000, self._hide_save_label)  # After 2 seconds, hide the save label
+                self.im_gen.save()
+
+            if self.text_entry.get().lower() == "{adjective} {noun} {past tense verb}":
                 if event.char == "1":  # New adjective (1st word)
                     t = self.im_gen.text.split(" ")
                     self.get_image(text="{adjective} "+t[1]+" "+t[2], bg=-1)
@@ -101,23 +141,6 @@ class DarkSoulsGen:
                     self.get_image(text=t[0]+" "+t[1]+" {past tense verb}", bg=-1)
                     self.bg_img_label.configure(image=self.tkimg)
                     self.bg_img_label.image = self.tkimg
-
-                elif event.char == "b":  # New background
-                    t = self.im_gen.text
-                    self.get_image(text=t)
-                    self.bg_img_label.configure(image=self.tkimg)
-                    self.bg_img_label.image = self.tkimg
-
-                elif event.char == "s":  # Save image
-                    try:
-                        self.save_label.destroy()  # If a save_label already exists, try to destroy it
-                    except AttributeError:
-                        pass
-
-                    self.save_label = Label(self.root, text="  Saved  ", bg="#000000", fg="#FFFFFF", font=(None, 16))
-                    self.save_label.place(relx=0.5, rely=0.15, anchor='center')
-                    self.root.after(2000, self._hide_save_label)  # After 2 seconds, hide the save label
-                    self.im_gen.save()
 
     def _hide_save_label(self):
         self.save_label.destroy()
