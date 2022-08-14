@@ -41,8 +41,8 @@ class DarkSoulsGen:
         self.ui_bar = Label(self.root, text=keybinds, bg="#000000", fg="#FFFFFF", anchor="w")
         self.ui_bar.grid(row=0, column=0, sticky="nsew")
 
-        self.label = Label(self.root, image=self.tkimg, borderwidth=0)
-        self.label.grid(row=1, column=0, padx=0, pady=0)
+        self.bg_img_label = Label(self.root, image=self.tkimg, borderwidth=0)
+        self.bg_img_label.grid(row=1, column=0, padx=0, pady=0)
 
         self.root.mainloop()
 
@@ -55,32 +55,32 @@ class DarkSoulsGen:
 
         if event.keysym == "space":  # re-gen all
             self.get_image()
-            self.label.configure(image=self.tkimg)
-            self.label.image = self.tkimg
+            self.bg_img_label.configure(image=self.tkimg)
+            self.bg_img_label.image = self.tkimg
 
         elif event.keysym == "1":  # re-gen adjective
             t = self.im_gen.text.split(" ")
             self.get_image(text=self.wg.get_adjective()+" "+t[1]+" "+t[2], bg=-1)
-            self.label.configure(image=self.tkimg)
-            self.label.image = self.tkimg
+            self.bg_img_label.configure(image=self.tkimg)
+            self.bg_img_label.image = self.tkimg
 
         elif event.keysym == "2":  # re-gen noun
             t = self.im_gen.text.split(" ")
             self.get_image(text=t[0]+" "+self.wg.get_noun()+" "+t[2], bg=-1)
-            self.label.configure(image=self.tkimg)
-            self.label.image = self.tkimg
+            self.bg_img_label.configure(image=self.tkimg)
+            self.bg_img_label.image = self.tkimg
 
         elif event.keysym == "3":  # re-gen verb
             t = self.im_gen.text.split(" ")
             self.get_image(text=t[0]+" "+t[1]+" "+self.wg.get_verb(), bg=-1)
-            self.label.configure(image=self.tkimg)
-            self.label.image = self.tkimg
+            self.bg_img_label.configure(image=self.tkimg)
+            self.bg_img_label.image = self.tkimg
 
         elif event.keysym in "b":  # re-gen background
             t = self.im_gen.text
             self.get_image(text=t)
-            self.label.configure(image=self.tkimg)
-            self.label.image = self.tkimg
+            self.bg_img_label.configure(image=self.tkimg)
+            self.bg_img_label.image = self.tkimg
 
         elif event.keysym == "s":  # save image
             try:
