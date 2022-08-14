@@ -29,13 +29,14 @@ class DarkSoulsGen:
 
         keybinds = ["[Space] Re-generate all",
                     "[S] Save image",
-                    "[B] New background",
+                    "[R] Reset input text",
                     "[1] New 1st word",
                     "[2] New 2nd word",
-                    "[3] New 3rd word"
+                    "[3] New 3rd word",
+                    "[B] New background"
                     ]
 
-        keybinds = ("        ").join(keybinds)  # Joins all keybindings with 8 spaces to separate them
+        keybinds = ("      ").join(keybinds)  # Joins all keybindings with 6 spaces to separate them
         keybinds = "  " + keybinds  # Add 2 spaces of padding to the front of the keybindings string
 
         self.keybinds_bar = Label(self.root, text=keybinds, bg="#000000", fg="#FFFFFF", anchor="w")
@@ -45,7 +46,7 @@ class DarkSoulsGen:
         self.text_entry_frame.columnconfigure(1, weight=1)
         self.text_entry_frame.grid(row=1, column=0, sticky="nsew")
 
-        self.text_entry_label = Label(self.text_entry_frame, text="Text:", bg="#FFFFFF", fg="#000000")
+        self.text_entry_label = Label(self.text_entry_frame, text="Input text:", bg="#FFFFFF", fg="#000000")
         self.text_entry_label.grid(row=0, column=0)
 
         self.text_entry = Entry(self.text_entry_frame, bg="#000000", fg="#FFFFFF", borderwidth=0)
