@@ -17,7 +17,7 @@ class DarkSoulsGen:
         self.root.bind("<Key>", self._key_handler)
         # self.root.bind('<Motion>', self._motion)
 
-        self.root.geometry('854x480+600+200')
+        self.root.geometry('854x500+600+200')
         self.root["bg"] = "black"
 
         self.font = (r'Trajan Pro Regular.ttf', 32)
@@ -27,10 +27,23 @@ class DarkSoulsGen:
         self.img = self.im_gen.gen(self.size, self.bg, self.text)
         self.tkimg = self.im_gen.tk()
 
-        # self.save_label = Label(self.root, text="", bg="#000000", fg="#FFFFFF")
-        self.label = Label(self.root, image=self.tkimg)
+        keybinds = ["[Space] Re-generate all",
+                    "[S] Save image",
+                    "[B] New background",
+                    "[1] New 1st word",
+                    "[2] New 2nd word",
+                    "[3] New 3rd word"
+                    ]
 
-        self.label.pack(expand=True)
+        keybinds = ("        ").join(keybinds)  # Joins all keybindings with 8 spaces to separate them
+        keybinds = "  " + keybinds  # Add 2 spaces of padding to the front of the keybindings string
+
+        self.ui_bar = Label(self.root, text=keybinds, bg="#000000", fg="#FFFFFF", anchor="w")
+        self.ui_bar.grid(row=0, column=0, sticky="nsew")
+
+        self.label = Label(self.root, image=self.tkimg, borderwidth=0)
+        self.label.grid(row=1, column=0, padx=0, pady=0)
+
         self.root.mainloop()
 
     # def _motion(self, event):
@@ -75,7 +88,7 @@ class DarkSoulsGen:
             except AttributeError:
                 pass
 
-            self.save_label = Label(self.root, text="Saved", bg="#000000", fg="#FFFFFF", font=self.font)
+            self.save_label = Label(self.root, text="  Saved  ", bg="#000000", fg="#FFFFFF", font=self.font)
             self.save_label.place(relx=0.5, rely=0.25, anchor='center')
             self.root.after(2000, self._hide_save_label)
             self.im_gen.save()
