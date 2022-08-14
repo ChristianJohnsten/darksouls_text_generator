@@ -65,10 +65,8 @@ class DarkSoulsGen:
     def _key_handler(self, event):
         # print(event.char, event.keysym, event.keycode)
 
-        print(str(self.root.focus_get()))
-
         if str(self.root.focus_get()) == ".!frame.!entry":  # If focus is on the text_entry, don't process keybinds
-            if event.char in ("\r", "\n"):  # Change focus and generate image when the enter key is pressed
+            if event.char in ("\r", "\n"):  # Change focus to the image and generate image when the enter key is pressed
                 self._set_img_focus()
                 self.get_image(text=self.text_entry.get().lower(), bg=-1)
                 self.bg_img_label.configure(image=self.tkimg)
@@ -76,25 +74,25 @@ class DarkSoulsGen:
 
         else:  # If focus is not on the text_entry, process all keybinds
             if event.char == " ":  # re-gen all
-                self.get_image()
+                self.get_image(text=self.text_entry.get().lower())
                 self.bg_img_label.configure(image=self.tkimg)
                 self.bg_img_label.image = self.tkimg
 
             elif event.char == "1":  # re-gen adjective
                 t = self.im_gen.text.split(" ")
-                self.get_image(text=self.wg.get_adjective()+" "+t[1]+" "+t[2], bg=-1)
+                self.get_image(text="{adjective} "+t[1]+" "+t[2], bg=-1)
                 self.bg_img_label.configure(image=self.tkimg)
                 self.bg_img_label.image = self.tkimg
 
             elif event.char == "2":  # re-gen noun
                 t = self.im_gen.text.split(" ")
-                self.get_image(text=t[0]+" "+self.wg.get_noun()+" "+t[2], bg=-1)
+                self.get_image(text=t[0] + " {noun} " + t[2], bg=-1)
                 self.bg_img_label.configure(image=self.tkimg)
                 self.bg_img_label.image = self.tkimg
 
             elif event.char == "3":  # re-gen verb
                 t = self.im_gen.text.split(" ")
-                self.get_image(text=t[0]+" "+t[1]+" "+self.wg.get_pt_verb(), bg=-1)
+                self.get_image(text=t[0]+" "+t[1]+" {past tense verb}", bg=-1)
                 self.bg_img_label.configure(image=self.tkimg)
                 self.bg_img_label.image = self.tkimg
 
@@ -129,7 +127,15 @@ class DarkSoulsGen:
         elif bg == -1:  # Use last selected image
             bg = self.bg
         if text is None:
-            text = self.wg.gen_anv()
+            text = "{adjective} {noun} {past tense verb}"
+
+        # Replace {noun}, {adjective}, etc. with randomly selected ones
+        for i in range(text.count("{noun}")):
+            text = text.replace("{noun}", self.wg.get_noun(), 1)
+        for i in range(text.count("{adjective}")):
+            text = text.replace("{adjective}", self.wg.get_adjective(), 1)
+        for i in range(text.count("{past tense verb}")):
+            text = text.replace("{past tense verb}", self.wg.get_pt_verb(), 1)
 
         self.img = self.im_gen.gen(size, bg, text.lower())
         self.tkimg = self.im_gen.tk()
