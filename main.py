@@ -49,7 +49,8 @@ class DarkSoulsGen:
         self.text_entry_label.grid(row=0, column=0)
 
         self.text_entry = Entry(self.text_entry_frame, bg="#000000", fg="#FFFFFF", borderwidth=0)
-        self.text_entry.insert(0, "{noun} {adjective} {past tense verb}")  # Sets initial text
+        self.default_text = "{noun} {adjective} {past tense verb}"
+        self.text_entry.insert(0, self.default_text)  # Sets initial text
         self.text_entry.grid(row=0, column=1, columnspan=2, sticky="nsew")
 
         self.bg_img_label = Label(self.root, image=self.tkimg, borderwidth=0)
@@ -77,6 +78,10 @@ class DarkSoulsGen:
                 self.get_image(text=self.text_entry.get().lower())
                 self.bg_img_label.configure(image=self.tkimg)
                 self.bg_img_label.image = self.tkimg
+
+            elif event.char == "r":  # reset text_entry
+                self.text_entry.delete(0, END)
+                self.text_entry.insert(0, self.default_text)
 
             elif event.char == "1":  # re-gen adjective
                 t = self.im_gen.text.split(" ")
