@@ -18,6 +18,7 @@ class DarkSoulsGen:
         # self.root.bind('<Motion>', self._motion)
 
         self.root.geometry('854x523+600+200')
+        self.root.resizable(False, False)
         self.root["bg"] = "black"
 
         self.font = (r'Trajan Pro Regular.ttf', 32)
