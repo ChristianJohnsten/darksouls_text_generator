@@ -17,7 +17,7 @@ class DarkSoulsGen:
         self.root.bind("<Key>", self._key_handler)
         # self.root.bind('<Motion>', self._motion)
 
-        self.root.geometry('854x500+600+200')
+        self.root.geometry('854x523+600+200')
         self.root["bg"] = "black"
 
         self.font = (r'Trajan Pro Regular.ttf', 32)
@@ -41,8 +41,16 @@ class DarkSoulsGen:
         self.keybinds_bar = Label(self.root, text=keybinds, bg="#000000", fg="#FFFFFF", anchor="w")
         self.keybinds_bar.grid(row=0, column=0, sticky="nsew")
 
-        self.text_entry = Entry(self.root, bg="#000000", fg="#FFFFFF")
-        self.text_entry.grid(row=1, column=0)
+        self.text_entry_frame = Frame(self.root, borderwidth=1)
+        self.text_entry_frame.columnconfigure(1, weight=1)
+        self.text_entry_frame.grid(row=1, column=0, sticky="nsew")
+
+        self.text_entry_label = Label(self.text_entry_frame, text="Text:", bg="#FFFFFF", fg="#000000")
+        self.text_entry_label.grid(row=0, column=0)
+
+        self.text_entry = Entry(self.text_entry_frame, bg="#000000", fg="#FFFFFF", borderwidth=0)
+        self.text_entry.insert(0, "{noun} {adjective} {past tense verb}")  # Sets initial text
+        self.text_entry.grid(row=0, column=1, columnspan=2, sticky="nsew")
 
         self.bg_img_label = Label(self.root, image=self.tkimg, borderwidth=0)
         self.bg_img_label.grid(row=2, column=0, padx=0, pady=0)
@@ -57,9 +65,9 @@ class DarkSoulsGen:
     def _key_handler(self, event):
         # print(event.char, event.keysym, event.keycode)
 
-        # print(str(self.root.focus_get()))
+        print(str(self.root.focus_get()))
 
-        if str(self.root.focus_get()) == ".!entry":  # If focus is on the text_entry, don't process keybinds
+        if str(self.root.focus_get()) == ".!frame.!entry":  # If focus is on the text_entry, don't process keybinds
             if event.char in ("\r", "\n"):  # Change focus and generate image when the enter key is pressed
                 self._set_img_focus()
                 self.get_image(text=self.text_entry.get().lower(), bg=-1)
