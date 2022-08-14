@@ -41,8 +41,12 @@ class DarkSoulsGen:
         self.keybinds_bar = Label(self.root, text=keybinds, bg="#000000", fg="#FFFFFF", anchor="w")
         self.keybinds_bar.grid(row=0, column=0, sticky="nsew")
 
+        self.text_entry = Entry(self.root, bg="#000000", fg="#FFFFFF")
+        self.text_entry.grid(row=1, column=0)
+
         self.bg_img_label = Label(self.root, image=self.tkimg, borderwidth=0)
-        self.bg_img_label.grid(row=1, column=0, padx=0, pady=0)
+        self.bg_img_label.grid(row=2, column=0, padx=0, pady=0)
+        self.bg_img_label.bind("<Button-1>", self._set_img_focus)  # Grab focus when image is clicked on
 
         self.root.mainloop()
 
@@ -53,48 +57,61 @@ class DarkSoulsGen:
     def _key_handler(self, event):
         # print(event.char, event.keysym, event.keycode)
 
-        if event.keysym == "space":  # re-gen all
-            self.get_image()
-            self.bg_img_label.configure(image=self.tkimg)
-            self.bg_img_label.image = self.tkimg
+        # print(str(self.root.focus_get()))
 
-        elif event.keysym == "1":  # re-gen adjective
-            t = self.im_gen.text.split(" ")
-            self.get_image(text=self.wg.get_adjective()+" "+t[1]+" "+t[2], bg=-1)
-            self.bg_img_label.configure(image=self.tkimg)
-            self.bg_img_label.image = self.tkimg
+        if str(self.root.focus_get()) == ".!entry":  # If focus is on the text_entry, don't process keybinds
+            if event.char in ("\r", "\n"):  # Change focus and generate image when the enter key is pressed
+                self._set_img_focus()
+                self.get_image(text=self.text_entry.get().lower(), bg=-1)
+                self.bg_img_label.configure(image=self.tkimg)
+                self.bg_img_label.image = self.tkimg
 
-        elif event.keysym == "2":  # re-gen noun
-            t = self.im_gen.text.split(" ")
-            self.get_image(text=t[0]+" "+self.wg.get_noun()+" "+t[2], bg=-1)
-            self.bg_img_label.configure(image=self.tkimg)
-            self.bg_img_label.image = self.tkimg
+        else:  # If focus is not on the text_entry, process all keybinds
+            if event.char == " ":  # re-gen all
+                self.get_image()
+                self.bg_img_label.configure(image=self.tkimg)
+                self.bg_img_label.image = self.tkimg
 
-        elif event.keysym == "3":  # re-gen verb
-            t = self.im_gen.text.split(" ")
-            self.get_image(text=t[0]+" "+t[1]+" "+self.wg.get_verb(), bg=-1)
-            self.bg_img_label.configure(image=self.tkimg)
-            self.bg_img_label.image = self.tkimg
+            elif event.char == "1":  # re-gen adjective
+                t = self.im_gen.text.split(" ")
+                self.get_image(text=self.wg.get_adjective()+" "+t[1]+" "+t[2], bg=-1)
+                self.bg_img_label.configure(image=self.tkimg)
+                self.bg_img_label.image = self.tkimg
 
-        elif event.keysym in "b":  # re-gen background
-            t = self.im_gen.text
-            self.get_image(text=t)
-            self.bg_img_label.configure(image=self.tkimg)
-            self.bg_img_label.image = self.tkimg
+            elif event.char == "2":  # re-gen noun
+                t = self.im_gen.text.split(" ")
+                self.get_image(text=t[0]+" "+self.wg.get_noun()+" "+t[2], bg=-1)
+                self.bg_img_label.configure(image=self.tkimg)
+                self.bg_img_label.image = self.tkimg
 
-        elif event.keysym == "s":  # save image
-            try:
-                self.save_label.destroy()
-            except AttributeError:
-                pass
+            elif event.char == "3":  # re-gen verb
+                t = self.im_gen.text.split(" ")
+                self.get_image(text=t[0]+" "+t[1]+" "+self.wg.get_verb(), bg=-1)
+                self.bg_img_label.configure(image=self.tkimg)
+                self.bg_img_label.image = self.tkimg
 
-            self.save_label = Label(self.root, text="  Saved  ", bg="#000000", fg="#FFFFFF", font=(None, 16))
-            self.save_label.place(relx=0.5, rely=0.15, anchor='center')
-            self.root.after(2000, self._hide_save_label)
-            self.im_gen.save()
+            elif event.char == "b":  # re-gen background
+                t = self.im_gen.text
+                self.get_image(text=t)
+                self.bg_img_label.configure(image=self.tkimg)
+                self.bg_img_label.image = self.tkimg
+
+            elif event.char == "s":  # save image
+                try:
+                    self.save_label.destroy()
+                except AttributeError:
+                    pass
+
+                self.save_label = Label(self.root, text="  Saved  ", bg="#000000", fg="#FFFFFF", font=(None, 16))
+                self.save_label.place(relx=0.5, rely=0.15, anchor='center')
+                self.root.after(2000, self._hide_save_label)
+                self.im_gen.save()
 
     def _hide_save_label(self):
         self.save_label.destroy()
+
+    def _set_img_focus(self, event=None):
+        self.bg_img_label.focus_set()
 
     def get_image(self, size=None, bg=None, text=None):
         if size is None:
@@ -106,7 +123,7 @@ class DarkSoulsGen:
         if text is None:
             text = self.wg.gen_anv()
 
-        self.img = self.im_gen.gen(size, bg, text)
+        self.img = self.im_gen.gen(size, bg, text.lower())
         self.tkimg = self.im_gen.tk()
         return self.img
 
