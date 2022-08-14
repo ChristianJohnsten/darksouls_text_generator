@@ -40,22 +40,22 @@ class DarkSoulsGen:
         keybinds = "  " + keybinds  # Add 2 spaces of padding to the front of the keybindings string
 
         self.keybinds_bar = Label(self.root, text=keybinds, bg="#000000", fg="#FFFFFF", anchor="w")
-        self.keybinds_bar.grid(row=0, column=0, sticky="nsew")
+        self.keybinds_bar.grid(row=2, column=0, sticky="nsew")
 
-        self.text_entry_frame = Frame(self.root, borderwidth=1)
+        self.text_entry_frame = Frame(self.root, bg="#FFFFFF", borderwidth=0)
         self.text_entry_frame.columnconfigure(1, weight=1)
-        self.text_entry_frame.grid(row=1, column=0, sticky="nsew")
+        self.text_entry_frame.grid(row=0, column=0, sticky="nsew")
 
         self.text_entry_label = Label(self.text_entry_frame, text="Input text:", bg="#FFFFFF", fg="#000000")
         self.text_entry_label.grid(row=0, column=0)
 
-        self.text_entry = Entry(self.text_entry_frame, bg="#000000", fg="#FFFFFF", borderwidth=0)
+        self.text_entry = Entry(self.text_entry_frame, bg="#EEEEEE", fg="#000000", borderwidth=0)
         self.default_text = "{noun} {adjective} {past tense verb}"
         self.text_entry.insert(0, self.default_text)  # Sets initial text
         self.text_entry.grid(row=0, column=1, columnspan=2, sticky="nsew")
 
         self.bg_img_label = Label(self.root, image=self.tkimg, borderwidth=0)
-        self.bg_img_label.grid(row=2, column=0, padx=0, pady=0)
+        self.bg_img_label.grid(row=1, column=0, padx=0, pady=0)
         self.bg_img_label.bind("<Button-1>", self._set_img_focus)  # Grab focus when image is clicked on
 
         self.root.mainloop()
