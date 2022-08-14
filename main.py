@@ -38,8 +38,8 @@ class DarkSoulsGen:
         keybinds = ("        ").join(keybinds)  # Joins all keybindings with 8 spaces to separate them
         keybinds = "  " + keybinds  # Add 2 spaces of padding to the front of the keybindings string
 
-        self.ui_bar = Label(self.root, text=keybinds, bg="#000000", fg="#FFFFFF", anchor="w")
-        self.ui_bar.grid(row=0, column=0, sticky="nsew")
+        self.keybinds_bar = Label(self.root, text=keybinds, bg="#000000", fg="#FFFFFF", anchor="w")
+        self.keybinds_bar.grid(row=0, column=0, sticky="nsew")
 
         self.bg_img_label = Label(self.root, image=self.tkimg, borderwidth=0)
         self.bg_img_label.grid(row=1, column=0, padx=0, pady=0)
