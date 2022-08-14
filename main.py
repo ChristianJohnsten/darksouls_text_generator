@@ -88,8 +88,8 @@ class DarkSoulsGen:
             except AttributeError:
                 pass
 
-            self.save_label = Label(self.root, text="  Saved  ", bg="#000000", fg="#FFFFFF", font=self.font)
-            self.save_label.place(relx=0.5, rely=0.25, anchor='center')
+            self.save_label = Label(self.root, text="  Saved  ", bg="#000000", fg="#FFFFFF", font=(None, 16))
+            self.save_label.place(relx=0.5, rely=0.15, anchor='center')
             self.root.after(2000, self._hide_save_label)
             self.im_gen.save()
 
