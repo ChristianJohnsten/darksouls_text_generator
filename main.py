@@ -94,7 +94,7 @@ class DarkSoulsGen:
 
             elif event.char == "3":  # re-gen verb
                 t = self.im_gen.text.split(" ")
-                self.get_image(text=t[0]+" "+t[1]+" "+self.wg.get_verb(), bg=-1)
+                self.get_image(text=t[0]+" "+t[1]+" "+self.wg.get_pt_verb(), bg=-1)
                 self.bg_img_label.configure(image=self.tkimg)
                 self.bg_img_label.image = self.tkimg
 
