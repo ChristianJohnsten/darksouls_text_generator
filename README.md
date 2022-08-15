@@ -118,9 +118,9 @@ You will only need a few things to get set up.
 ## Usage
 
 #### Keyboard:
-* `Space` key: Generates a random image with text from the text input field
+* `Space` key: Generates a random image with text from the input text field
 * `S` key: Saves the current image to the `/generated` folder as `{generated_text}.png`
-* `R` key: Resets the input text to its default value
+* `R` key: Resets the input text to its default value and generates a random image
 * `B` key: Randomly selects a different background
 
 
@@ -131,14 +131,14 @@ You will only need a few things to get set up.
 
 <br/>
 
-#### Text input:
-The text input field at the top of the window allows for user inputted text to be displayed (Note: This disables the `1`, `2`, `3` keys).
+#### Input text:
+The input text field at the top of the window allows for user inputted text to be displayed (Note: This disables the `1`, `2`, `3` keys).
 Variables can be used to get random nouns, adjectives, or past tense verbs.
 * `{adjective}`
 * `{noun}`
 * `{past tense verb}`
 
-Example text input using variables:
+Example input text using variables:
 * `Dogs are {adjective}`
 * `The {noun} is {adjective}`
 * `They {past tense verb} at the {noun}`
