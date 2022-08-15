@@ -118,7 +118,7 @@ You will only need a few things to get set up.
 ## Usage
 
 #### Keyboard:
-* `Space` key: Generates a random image with random 3-word text
+* `Space` key: Generates a random image with text from the text input field
 * `S` key: Saves the current image to the `/generated` folder as `{generated_text}.png`
 * `R` key: Resets the input text to its default value
 * `B` key: Randomly selects a different background
