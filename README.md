@@ -117,7 +117,7 @@ You will only need a few things to get set up.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Keyboard:
+#### Keyboard:
 * `Space` key: Generates a random image with random 3-word text
 * `S` key: Saves the current image to the `/generated` folder as `{generated_text}.png`
 * `R` key: Resets the input text to its default value
@@ -128,6 +128,23 @@ Keyboard:
   * `1` key: Re-generates the 1st word
   * `2` key: Re-generates the 2nd word
   * `3` key: Re-generates the 3rd word
+
+<br/>
+
+#### Text input:
+The text input field at the top of the window allows for user inputted text to be displayed (Note: This disables the `1`, `2`, `3` keys).
+Variables can be used to get random nouns, adjectives, or past tense verbs.
+* `{adjective}`
+* `{noun}`
+* `{past tense verb}`
+
+Example text input using variables:
+* `Dogs are {adjective}`
+* `The {noun} is {adjective}`
+* `They {past tense verb} at the {noun}`
+
+
+
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
