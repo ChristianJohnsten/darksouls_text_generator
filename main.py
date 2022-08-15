@@ -46,7 +46,7 @@ class DarkSoulsGen:
         # ----- Keybindings bar -----
         self.keybinds_list = ["[Space] Re-generate all",
                               "[S] Save image",
-                              "[R] Reset input text",
+                              "[R] Reset",
                               "[B] New background",
                               "[1] New 1st word",
                               "[2] New 2nd word",
@@ -101,10 +101,13 @@ class DarkSoulsGen:
                 self.bg_img_label.configure(image=self.tkimg)
                 self.bg_img_label.image = self.tkimg
 
-            elif event.char == "r":  # Reset text_entry (input text)
+            elif event.char == "r":  # Reset text_entry (input text) and regenerate all
                 self.text_entry.delete(0, END)
                 self.text_entry.insert(0, self.default_text)
                 self._build_keybinds_bar()
+                self.get_image(text=self.text_entry.get().lower())
+                self.bg_img_label.configure(image=self.tkimg)
+                self.bg_img_label.image = self.tkimg
 
             elif event.char == "b":  # New background
                 t = self.im_gen.text
