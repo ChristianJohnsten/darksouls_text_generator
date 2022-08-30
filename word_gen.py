@@ -4,10 +4,10 @@ class WordGen:
     def __init__(self):
         self.adjectives_list = "word_lists/adjectives.txt"
         self.nouns_list = "word_lists/nouns.txt"
-        self.verbs_list = "word_lists/verbs_past_tense.txt"
+        self.pt_verbs_list = "word_lists/verbs_past_tense.txt"
         self.adjectives = []
         self.nouns = []
-        self.verbs = []
+        self.pt_verbs = []
 
         # Load and format adjectives
         with open(self.adjectives_list, "r") as f:
@@ -24,11 +24,11 @@ class WordGen:
             self.nouns[i] = self.nouns[i].rstrip()
 
         # Load and format verbs
-        with open(self.verbs_list, "r") as f:
-            self.verbs = f.readlines()
+        with open(self.pt_verbs_list, "r") as f:
+            self.pt_verbs = f.readlines()
 
-        for i in range(len(self.verbs)):
-            self.verbs[i] = self.verbs[i].rstrip()
+        for i in range(len(self.pt_verbs)):
+            self.pt_verbs[i] = self.pt_verbs[i].rstrip()
 
     def get_adjective(self):
         return self.adjectives[randint(0, len(self.adjectives)-1)]
@@ -36,14 +36,14 @@ class WordGen:
     def get_noun(self):
         return self.nouns[randint(0, len(self.nouns)-1)]
 
-    def get_verb(self):
-        return self.verbs[randint(0, len(self.verbs)-1)]
+    def get_pt_verb(self):
+        return self.pt_verbs[randint(0, len(self.pt_verbs) - 1)]
 
     def gen_anv(self):
-        return self.get_adjective() + " " + self.get_noun() + " " + self.get_verb()
+        return self.get_adjective() + " " + self.get_noun() + " " + self.get_pt_verb()
 
     def gen_nv(self):
-        return self.get_noun() + " " + self.get_verb()
+        return self.get_noun() + " " + self.get_pt_verb()
 
 
 if __name__ == "__main__":

@@ -117,13 +117,34 @@ You will only need a few things to get set up.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Keyboard:
-* `Space` key: Generates a random image with random 3-word text
+#### Keyboard:
+* `Space` key: Generates a random image with text from the input text field
 * `S` key: Saves the current image to the `/generated` folder as `{generated_text}.png`
-* `1` key: Re-generates the 1st word
-* `2` key: Re-generates the 2nd word
-* `3` key: Re-generates the 3rd word
+* `R` key: Resets the input text to its default value and generates a random image
 * `B` key: Randomly selects a different background
+
+
+* These keys only work when the input text is its default value `{adjective} {noun} {past tense verb}`:
+  * `1` key: Re-generates the 1st word
+  * `2` key: Re-generates the 2nd word
+  * `3` key: Re-generates the 3rd word
+
+<br/>
+
+#### Input text:
+The input text field at the top of the window allows for user inputted text to be displayed (Note: This disables the `1`, `2`, `3` keys).
+Variables can be used to get random nouns, adjectives, or past tense verbs.
+* `{adjective}`
+* `{noun}`
+* `{past tense verb}`
+
+Example input text using variables:
+* `Dogs are {adjective}`
+* `The {noun} is {adjective}`
+* `They {past tense verb} at the {noun}`
+
+
+
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -134,9 +155,9 @@ Keyboard:
 ## Roadmap
 
 - [x] Re-generate the 1st, 2nd, and 3rd words with the `1`, `2`, `3` keys.
-- [ ] Allow 2 or 3 word text generation (eg. noun verbed OR adjective noun verbed).
-- [ ] Accept user inputted text.
-- [ ] Display keybindings to the user.
+- ~~[ ] Allow 2 or 3 word text generation (eg. noun verbed OR adjective noun verbed).~~ (Covered by user inputted text)
+- [x] Accept user inputted text.
+- [x] Display keybindings to the user.
 - [ ] Add scrolling back to previously generated images / text.
 
 See the [open issues](https://github.com/chrisddr77/darksouls_text_generator/issues) for a full list of proposed features (and known issues).
