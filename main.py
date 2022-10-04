@@ -15,6 +15,11 @@ class DarkSoulsGen:
         self.font = (r'Trajan Pro Regular.ttf', 32)
         self.default_text = "{adjective} {noun} {past tense verb}"
 
+        # ----- Colors
+        self.text_colors = ["#860507", "#ffff6e", "#84faac"]
+        self.text_color_index = 0
+        self.text_color = self.text_colors[self.text_color_index]
+
         # ----- Initialize tkinter root window -----
         self.root = Tk()
         self.root.geometry('854x523+600+200')
@@ -45,12 +50,13 @@ class DarkSoulsGen:
 
         # ----- Keybindings bar -----
         self.keybinds_list = ["[Space] Re-generate all",
-                              "[S] Save image",
+                              "[S] Save",
                               "[R] Reset",
-                              "[B] New background",
-                              "[1] New 1st word",
-                              "[2] New 2nd word",
-                              "[3] New 3rd word"
+                              "[B] Background",
+                              "[1] 1st word",
+                              "[2] 2nd word",
+                              "[3] 3rd word",
+                              "[C] Text color"
                               ]
 
         self.keybinds = ""
@@ -126,6 +132,15 @@ class DarkSoulsGen:
                 self.root.after(2000, self._hide_save_label)  # After 2 seconds, hide the save label
                 self.im_gen.save()
 
+            elif event.char == "c":  # Cycle text color
+                self.text_color_index = (self.text_color_index + 1) % len(self.text_colors)
+                self.text_color = self.text_colors[self.text_color_index]
+
+                t = self.im_gen.text
+                self.get_image(text=t, bg=-1)
+                self.bg_img_label.configure(image=self.tkimg)
+                self.bg_img_label.image = self.tkimg
+
             if self.text_entry.get().lower() == "{adjective} {noun} {past tense verb}":
                 if event.char == "1":  # New adjective (1st word)
                     t = self.im_gen.text.split(" ")
@@ -151,7 +166,7 @@ class DarkSoulsGen:
     def _set_img_focus(self, event=None):
         self.bg_img_label.focus_set()
 
-    def get_image(self, size=None, bg=None, text=None):
+    def get_image(self, size=None, bg=None, text=None, text_color=None):
         if size is None:  # If size is not given, use default size
             size = self.size
         if bg is None:  # If background is not given, use a random one
@@ -160,6 +175,8 @@ class DarkSoulsGen:
             bg = self.bg
         if text is None:  # If text is not given, use the default text
             text = self.default_text
+        if text_color is None:
+            text_color = self.text_color
 
         # Replace {noun}, {adjective}, etc. with randomly selected ones
         for i in range(text.count("{adjective}")):
@@ -169,7 +186,7 @@ class DarkSoulsGen:
         for i in range(text.count("{past tense verb}")):
             text = text.replace("{past tense verb}", self.wg.get_pt_verb(), 1)
 
-        self.img = self.im_gen.gen(size, bg, text.lower())
+        self.img = self.im_gen.gen(size, bg, text.lower(), text_color)
         self.tkimg = self.im_gen.tk()
         return self.img
 
