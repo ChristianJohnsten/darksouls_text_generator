@@ -122,6 +122,7 @@ You will only need a few things to get set up.
 * `S` key: Saves the current image to the `/generated` folder as `{generated_text}.png`
 * `R` key: Resets the input text to its default value and generates a random image
 * `B` key: Randomly selects a different background
+* `C` key: Cycles between different text colors
 
 
 * These keys only work when the input text is its default value `{adjective} {noun} {past tense verb}`:
