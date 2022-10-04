@@ -8,7 +8,7 @@ class ImgGen:
         self.font = ImageFont.truetype(r'Trajan Pro Regular.ttf', 64)
         self.text = ""
 
-    def gen(self, size, background, text):
+    def gen(self, size, background, text, text_color):
         self.text = text
         self.img = Image.open(background)
         self.img = self.img.resize(size, Image.Resampling.LANCZOS)
@@ -29,7 +29,7 @@ class ImgGen:
 
         self.txt_draw_obj = ImageDraw.Draw(self.txt_img, 'RGBA')
 
-        self._draw_text(text)
+        self._draw_text(text, text_color)
         self.txt_img = self.txt_img.resize(size, Image.Resampling.LANCZOS)
         txt_w, txt_h = self.txt_img.size
 
@@ -96,7 +96,5 @@ class ImgGen:
         self._draw_gradient(0, y2, width, y2 + height // 8, c1=(0, 0, 0, 0), c2=(0, 0, 0, 220))
 
 
-    def _draw_text(self, text):
-        self.txt_draw_obj.text((self.txt_img.width // 2, self.txt_img.height // 2), text, fill="#860507", font=self.font, anchor="mm")
-
-
+    def _draw_text(self, text, text_color):
+        self.txt_draw_obj.text((self.txt_img.width // 2, self.txt_img.height // 2), text, fill=text_color, font=self.font, anchor="mm")
